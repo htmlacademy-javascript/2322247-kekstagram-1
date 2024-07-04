@@ -1,7 +1,7 @@
 import { getRandomElementArray } from './until.js';
 import {getRandomInteger} from './until.js';
 import {generateCommentId} from './until.js';
-import {usedIdPhotos} from './until.js';
+import {createIdGenerator} from './until.js';
 const COUNT_PICTURE = 25;
 const COUNT_AVATAR = 6;
 const MIN_LIKES = 15;
@@ -30,6 +30,7 @@ const MESSAGES = [
 
 const NAMES = ['Таня', 'Аня', 'Алёна', 'Иван', 'Анатолий', 'Артём'];
 
+const usedIdPhotos = createIdGenerator();
 
 const createMessage = () =>
   Array.from({ length: getRandomInteger(1, 2) }, () =>
@@ -45,7 +46,7 @@ const createComment = () => ({
 
 const generateIdPhoto = () => {
   const id = getRandomInteger(1, COUNT_PICTURE);
-  if (!usedIdPhotos(id)) {
+  if (!usedIdPhotos[id]) {
     usedIdPhotos[id] = id;
     return id;
   }
@@ -54,7 +55,7 @@ const generateIdPhoto = () => {
 
 const createPicture = (index) => ({
   id: index,
-  url: `photos/${generateIdPhoto}.jpg`,
+  url: `photos/${generateIdPhoto()}.jpg`,
   description: getRandomElementArray(DESCRIPTION),
   likes: getRandomInteger(MIN_LIKES, MAX_LIKES),
   comments: Array.from(
@@ -66,5 +67,4 @@ const createPicture = (index) => ({
 const getPictures = () =>
   Array.from({ length: COUNT_PICTURE }, (_, index) => createPicture(index + 1));
 
-getPictures();
 export { getPictures };

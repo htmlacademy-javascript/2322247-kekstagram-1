@@ -17,9 +17,9 @@ const createIdGenerator = () => {
 };
 
 const generateCommentId = createIdGenerator();
-const usedIdPhotos = createIdGenerator();
+
 
 export{getRandomElementArray};
 export{getRandomInteger};
 export{generateCommentId};
-export{usedIdPhotos};
+export{createIdGenerator};
