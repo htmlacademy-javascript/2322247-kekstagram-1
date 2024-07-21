@@ -1,7 +1,7 @@
 import { getRandomElementArray } from './until.js';
 import {getRandomInteger} from './until.js';
 import {generateCommentId} from './until.js';
-import {createIdGenerator} from './until.js';
+
 const COUNT_PICTURE = 25;
 const COUNT_AVATAR = 6;
 const MIN_LIKES = 15;
@@ -30,7 +30,7 @@ const MESSAGES = [
 
 const NAMES = ['Таня', 'Аня', 'Алёна', 'Иван', 'Анатолий', 'Артём'];
 
-const usedIdPhotos = createIdGenerator();
+const usedIdPhotos = {};
 
 const createMessage = () =>
   Array.from({ length: getRandomInteger(1, 2) }, () =>
