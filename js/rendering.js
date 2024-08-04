@@ -3,12 +3,12 @@ const content = document
   .content.querySelector('.picture');
 const container = document.querySelector('.pictures');
 
-const createMiniPicture = ({ url, likes, comments }) => {
+const createMiniPicture = ({ url, likes, comments, id }) => {
   const miniPicture = content.cloneNode(true);
   miniPicture.querySelector('.picture__img').src = url;
   miniPicture.querySelector('.picture__likes').textContent = likes;
   miniPicture.querySelector('.picture__comments').textContent = comments.length;
-
+  miniPicture.dataset.pictureId = id;
   return miniPicture;
 };
 
