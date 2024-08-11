@@ -11,11 +11,11 @@ let commentsShown = 0;
 let comments = [];
 
 const createComment = ({ avatar, name, message }) => {
-  const commentElement = commentTemplate.cloneNode(true);
-  commentElement.querySelector('.social__picture').src = avatar;
-  commentElement.querySelector('.social__picture').alt = name;
-  commentElement.querySelector('.social__text').textContent = message;
-  return commentElement;
+  const comment = commentTemplate.cloneNode(true);
+  comment.querySelector('.social__picture').src = avatar;
+  comment.querySelector('.social__picture').alt = name;
+  comment.querySelector('.social__text').textContent = message;
+  return comment;
 };
 
 const renderComments = () => {
@@ -26,8 +26,8 @@ const renderComments = () => {
     i < Math.min(commentsShown + COMMENTS_PER_PORTION, comments.length);
     i++
   ) {
-    const commentElement = createComment(comments[i]);
-    fragment.append(commentElement);
+    const comment = createComment(comments[i]);
+    fragment.append(comment);
   }
 
   commentList.append(fragment);
@@ -41,7 +41,15 @@ const renderComments = () => {
     commentsLoader.classList.remove('hidden');
   }
 
-  commentCount.innerHTML = `${commentsShown} из <span class="comments-count">${comments.length}</span> комментариев`;
+  const totalCommentsCount = commentCount.querySelector('.comments-count');
+  totalCommentsCount.textContent = comments.length.toString();
+
+  const visibleCommentsText = document.createTextNode(`${commentsShown} из `);
+  if (commentCount.firstChild) {
+    commentCount.replaceChild(visibleCommentsText, commentCount.firstChild);
+  } else {
+    commentCount.insertBefore(visibleCommentsText, totalCommentsCount);
+  }
 };
 
 const hideBigPicture = () => {
