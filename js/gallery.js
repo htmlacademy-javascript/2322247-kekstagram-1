@@ -9,6 +9,7 @@ const renderGallary = (pictures) => {
     if (!miniPicture) {
       return;
     }
+    evt.preventDefault();
 
     const picture = pictures.find(
       (item) => item.id === +miniPicture.dataset.pictureId
@@ -19,4 +20,4 @@ const renderGallary = (pictures) => {
   renderMiniPicture(pictures, container);
 };
 
-export{renderGallary};
+export { renderGallary };
