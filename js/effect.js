@@ -68,6 +68,11 @@ const hideSlider = () => {
 };
 
 const updateSlider = () => {
+  if (isDefault()) {
+    hideSlider();
+    return;
+  }
+
   slider.noUiSlider.updateOptions({
     range: {
       min: chosenEffect.min,
@@ -77,11 +82,7 @@ const updateSlider = () => {
     start: chosenEffect.max,
   });
 
-  if (isDefault()) {
-    hideSlider();
-  } else {
-    showSlider();
-  }
+  showSlider();
 };
 
 const onEffectsChange = (evt) => {
