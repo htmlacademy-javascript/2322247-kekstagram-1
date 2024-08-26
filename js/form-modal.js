@@ -25,6 +25,20 @@ const showModal = () => {
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
+const blockSubmitButton = () => {
+  const submitButton = document.getElementById('upload-submit');
+  submitButton.disabled = true;
+  submitButton.style.opacity = 0.5;
+  submitButton.classList.add('disabled');
+};
+
+const unblockSubmitButton = () => {
+  const submitButton = document.getElementById('upload-submit');
+  submitButton.disabled = false;
+  submitButton.style.opacity = 1;
+  submitButton.classList.remove('disabled');
+};
+
 const hideModal = () => {
   form.reset();
   resetScale();
@@ -77,11 +91,20 @@ pristine.addValidator(
   TAG_ERROR_TEXT
 );
 
-const onFormSubmit = (evt) => {
-  evt.preventDefault();
-  pristine.validate();
+const setOnFormSubmit = (cb) => {
+  form.addEventListener('submit', async (evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+
+    if (isValid) {
+      blockSubmitButton();
+      await cb(new FormData(form));
+      unblockSubmitButton();
+    }
+  });
 };
 
 fileField.addEventListener('change', onFileInputChange);
 cancelButton.addEventListener('click', onCancelButtonClick);
-form.addEventListener('submit', onFormSubmit);
+
+export { setOnFormSubmit, hideModal };

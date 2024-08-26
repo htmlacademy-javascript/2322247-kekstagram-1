@@ -124,4 +124,22 @@ hideSlider();
 effects.addEventListener('change', onEffectsChange);
 slider.noUiSlider.on('update', onSliderUpdate);
 
+const loadImage = async () => {
+  try {
+    const data = await getData();
+    const imageUrl = data.url;
+
+    const image = document.createElement('img');
+    image.src = imageUrl;
+    image.alt = 'Загруженное изображение';
+    imageContainer.appendChild(image);
+
+    scaleImage(DEFAULT_SCALE);
+  } catch (error) {
+    console.error('Ошибка при загрузке изображения:', error);
+  }
+};
+
+window.onload = loadImage;
+
 export { resetEffects };
