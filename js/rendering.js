@@ -12,7 +12,7 @@ const createMiniPicture = ({ url, likes, comments, id }) => {
   return miniPicture;
 };
 
-const renderMiniPicture = (pictures) => {
+const renderMiniPicture = (pictures, container) => {
   const fragment = document.createDocumentFragment();
   pictures.forEach((picture) => {
     const miniPicture = createMiniPicture(picture);

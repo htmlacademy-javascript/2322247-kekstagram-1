@@ -51,7 +51,6 @@ const EFFECTS = [
 const DEFAULT_EFFECT = EFFECTS[0];
 let chosenEffect = DEFAULT_EFFECT;
 
-const image = document.querySelector('.img-upload__preview img');
 const effects = document.querySelector('.effects');
 const slider = document.querySelector('.effect-level__slider');
 const sliderContainer = document.querySelector('.img-upload__preview-container');
@@ -124,22 +123,5 @@ hideSlider();
 effects.addEventListener('change', onEffectsChange);
 slider.noUiSlider.on('update', onSliderUpdate);
 
-const loadImage = async () => {
-  try {
-    const data = await getData();
-    const imageUrl = data.url;
-
-    const image = document.createElement('img');
-    image.src = imageUrl;
-    image.alt = 'Загруженное изображение';
-    imageContainer.appendChild(image);
-
-    scaleImage(DEFAULT_SCALE);
-  } catch (error) {
-    console.error('Ошибка при загрузке изображения:', error);
-  }
-};
-
-window.onload = loadImage;
 
 export { resetEffects };

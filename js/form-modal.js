@@ -66,6 +66,14 @@ const onCancelButtonClick = () => {
 
 const onFileInputChange = () => {
   showModal();
+  const file = fileField.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      image.src = event.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
 };
 
 const isValidTag = (tag) => VALID_SYMBOLS.test(tag);
