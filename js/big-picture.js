@@ -10,11 +10,11 @@ const cancelButton = document.querySelector('.big-picture__cancel');
 let commentsShown = 0;
 let comments = [];
 
-const createComment = ({ avatar, name, message }) => {
+const createComment = (data) => {
   const comment = commentTemplate.cloneNode(true);
-  comment.querySelector('.social__picture').src = avatar;
-  comment.querySelector('.social__picture').alt = name;
-  comment.querySelector('.social__text').textContent = message;
+  comment.querySelector('.social__picture').src = data.avatar;
+  comment.querySelector('.social__picture').alt = data.name;
+  comment.querySelector('.social__text').textContent = data.message;
   return comment;
 };
 
@@ -41,7 +41,7 @@ const renderComments = () => {
     commentsLoader.classList.remove('hidden');
   }
 
-  const totalCommentsCount = commentCount.querySelector('.comments-count');
+  const totalCommentsCount = data.comment;
   totalCommentsCount.textContent = comments.length.toString();
 
   const visibleCommentsText = document.createTextNode(`${commentsShown} из `);
@@ -74,11 +74,11 @@ const onCommentsLoaderClick = () => {
 };
 
 
-const renderPictureDetails = ({ url, likes, description }) => {
-  bigPicture.querySelector('.big-picture__img img').src = url;
-  bigPicture.querySelector('.big-picture__img img').alt = description;
-  bigPicture.querySelector('.likes-count').textContent = likes;
-  bigPicture.querySelector('.social__caption').textContent = description;
+const renderPictureDetails = (data) => {
+  bigPicture.querySelector('.big-picture__img img').src = data.url;
+  bigPicture.querySelector('.big-picture__img img').alt = data.description;
+  bigPicture.querySelector('.likes-count').textContent = data.likes;
+  bigPicture.querySelector('.social__caption').textContent = data.description;
 };
 
 const renderBigPicture = (data) => {
@@ -95,7 +95,7 @@ const renderBigPicture = (data) => {
   commentsLoader.removeEventListener('click', onCommentsLoaderClick);
   commentsLoader.addEventListener('click', onCommentsLoaderClick);
 
-  comments = data.comments;
+  comments = data.comment;
 
   commentList.innerHTML = '';
 
@@ -105,5 +105,4 @@ const renderBigPicture = (data) => {
 };
 
 cancelButton.addEventListener('click', onCancelButtonClick);
-
 export { renderBigPicture };

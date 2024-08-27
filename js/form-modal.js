@@ -5,6 +5,7 @@ const MAX_HASHTAG_COUNT = 5;
 const VALID_SYMBOLS = /^#[a-zA-Zа-яёА-Я0-9]{1,19}$/i;
 const TAG_ERROR_TEXT = 'Неправильно заполнены хэштеги';
 
+const image = document.createElement('img');
 const form = document.querySelector('.img-upload__form');
 const overlay = document.querySelector('.img-upload__overlay');
 const body = document.querySelector('body');
@@ -115,4 +116,6 @@ const setOnFormSubmit = (cb) => {
 fileField.addEventListener('change', onFileInputChange);
 cancelButton.addEventListener('click', onCancelButtonClick);
 
-export { setOnFormSubmit, hideModal };
+console.log(image)
+
+export { setOnFormSubmit, hideModal};

@@ -1,3 +1,4 @@
+
 const EFFECTS = [
   {
     name: 'none',
@@ -123,5 +124,4 @@ hideSlider();
 effects.addEventListener('change', onEffectsChange);
 slider.noUiSlider.on('update', onSliderUpdate);
 
-
-export { resetEffects };
+export { resetEffects};

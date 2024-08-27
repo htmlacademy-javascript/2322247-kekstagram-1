@@ -4,8 +4,6 @@ import {showAlert} from './alert.js';
 import {setOnFormSubmit, hideModal} from './form-modal.js';
 import {showSuccessMessage, showErrorMessage} from './message.js';
 
-let data;
-
 setOnFormSubmit(async (data) => {
   try {
     await sendData(data);
@@ -22,6 +20,3 @@ try {
 } catch (err) {
   showAlert(err.message);
 }
-
-console.log(data)
-export{data};
