@@ -1,7 +1,6 @@
 const content = document
   .querySelector('#picture')
   .content.querySelector('.picture');
-const container = document.querySelector('.pictures');
 
 const createMiniPicture = (data) => {
   const miniPicture = content.cloneNode(true);
@@ -12,12 +11,11 @@ const createMiniPicture = (data) => {
   return miniPicture;
 };
 
-const renderMiniPicture = (pictures) => {
+const renderMiniPicture = (pictures, container) => {
   const fragment = document.createDocumentFragment();
   pictures.forEach((picture) => {
     const miniPicture = createMiniPicture(picture);
     fragment.append(miniPicture);
-
   });
   container.append(fragment);
 };

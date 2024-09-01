@@ -3,7 +3,7 @@ import { renderBigPicture } from './big-picture.js';
 
 const container = document.querySelector('.pictures');
 
-const renderGallary = (pictures) => {
+const renderGallary = (data) => {
   container.addEventListener('click', (evt) => {
     const miniPicture = evt.target.closest('[data-picture-id]');
     if (!miniPicture) {
@@ -11,13 +11,12 @@ const renderGallary = (pictures) => {
     }
     evt.preventDefault();
 
-    const picture = pictures.find(
+    const picture = data.find(
       (item) => item.id === +miniPicture.dataset.pictureId
     );
     renderBigPicture(picture);
   });
-
-  renderMiniPicture(pictures, container);
+  renderMiniPicture(data, container);
 };
 
 export { renderGallary };

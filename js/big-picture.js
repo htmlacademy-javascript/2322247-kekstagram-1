@@ -41,7 +41,7 @@ const renderComments = () => {
     commentsLoader.classList.remove('hidden');
   }
 
-  const totalCommentsCount = data.comment;
+  const totalCommentsCount = commentCount.querySelector('.comments-count');
   totalCommentsCount.textContent = comments.length.toString();
 
   const visibleCommentsText = document.createTextNode(`${commentsShown} из `);
@@ -70,18 +70,18 @@ const onCancelButtonClick = () => {
 };
 
 const onCommentsLoaderClick = () => {
-  renderComments();
+  renderComments(comments);
 };
 
 
-const renderPictureDetails = (data) => {
-  bigPicture.querySelector('.big-picture__img img').src = data.url;
-  bigPicture.querySelector('.big-picture__img img').alt = data.description;
-  bigPicture.querySelector('.likes-count').textContent = data.likes;
-  bigPicture.querySelector('.social__caption').textContent = data.description;
+const renderPictureDetails = (picture) => {
+  bigPicture.querySelector('.big-picture__img img').src = picture.url;
+  bigPicture.querySelector('.big-picture__img img').alt = picture.description;
+  bigPicture.querySelector('.likes-count').textContent = picture.likes;
+  bigPicture.querySelector('.social__caption').textContent = picture.description;
 };
 
-const renderBigPicture = (data) => {
+const renderBigPicture = (picture) => {
   bigPicture.classList.remove('hidden');
   body.classList.add('modal-open');
 
@@ -95,13 +95,13 @@ const renderBigPicture = (data) => {
   commentsLoader.removeEventListener('click', onCommentsLoaderClick);
   commentsLoader.addEventListener('click', onCommentsLoaderClick);
 
-  comments = data.comment;
+  comments = picture.comments;
 
   commentList.innerHTML = '';
 
-  renderComments();
+  renderComments(comments);
 
-  renderPictureDetails(data);
+  renderPictureDetails(picture);
 };
 
 cancelButton.addEventListener('click', onCancelButtonClick);

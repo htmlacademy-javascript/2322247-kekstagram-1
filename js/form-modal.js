@@ -1,11 +1,10 @@
-import { resetEffects } from './effect.js';
-import { resetScale } from './scale.js';
+import { resetEffects, onEffectsChange, onSliderUpdate, slider, effects } from './effect.js';
+import { resetScale, scaleImage, smallerButton, biggerButton } from './scale.js';
 
 const MAX_HASHTAG_COUNT = 5;
 const VALID_SYMBOLS = /^#[a-zA-Zа-яёА-Я0-9]{1,19}$/i;
 const TAG_ERROR_TEXT = 'Неправильно заполнены хэштеги';
 
-const image = document.createElement('img');
 const form = document.querySelector('.img-upload__form');
 const overlay = document.querySelector('.img-upload__overlay');
 const body = document.querySelector('body');
@@ -13,6 +12,8 @@ const cancelButton = document.querySelector('#upload-cancel');
 const fileField = document.querySelector('#upload-file');
 const hashtagField = document.querySelector('.text__hashtags');
 const commentField = document.querySelector('.text__description');
+const imageContainer = document.querySelector('.img-upload__preview');
+const image = imageContainer.querySelector('img');
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -72,6 +73,14 @@ const onFileInputChange = () => {
     const reader = new FileReader();
     reader.onload = (event) => {
       image.src = event.target.result;
+      image.onload = () => {
+        slider.noUiSlider.on('update', () => onSliderUpdate());
+        smallerButton.addEventListener('click', () => scaleImage());
+        biggerButton.addEventListener('click', () => scaleImage());
+        effects.addEventListener('change', (evt) => onEffectsChange(evt));
+        resetScale();
+      };
+      imageContainer.appendChild(image);
     };
     reader.readAsDataURL(file);
   }
@@ -116,6 +125,4 @@ const setOnFormSubmit = (cb) => {
 fileField.addEventListener('change', onFileInputChange);
 cancelButton.addEventListener('click', onCancelButtonClick);
 
-console.log(image)
-
-export { setOnFormSubmit, hideModal};
+export { setOnFormSubmit, hideModal,image };

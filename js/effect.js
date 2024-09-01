@@ -1,4 +1,4 @@
-
+import { image } from './form-modal.js';
 const EFFECTS = [
   {
     name: 'none',
@@ -54,7 +54,7 @@ let chosenEffect = DEFAULT_EFFECT;
 
 const effects = document.querySelector('.effects');
 const slider = document.querySelector('.effect-level__slider');
-const sliderContainer = document.querySelector('.img-upload__preview-container');
+const sliderContainer = document.querySelector('.img-upload__effect-level');
 const effectLevel = document.querySelector('.effect-level__value');
 
 const isDefault = () => chosenEffect === DEFAULT_EFFECT;
@@ -85,6 +85,18 @@ const updateSlider = () => {
   showSlider();
 };
 
+const onSliderUpdate = () => {
+  if (image) {
+    const sliderValue = slider.noUiSlider.get();
+    if (isDefault()) {
+      image.style.filter = DEFAULT_EFFECT.style;
+    } else {
+      image.style.filter = `${chosenEffect.style}(${sliderValue}${chosenEffect.unit})`;
+    }
+    effectLevel.value = sliderValue;
+  }
+};
+
 const onEffectsChange = (evt) => {
   if (!evt.target.classList.contains('effects__radio')) {
     return;
@@ -92,18 +104,8 @@ const onEffectsChange = (evt) => {
   chosenEffect = EFFECTS.find((effect) => effect.name === evt.target.value);
   image.className = `effects__preview--${chosenEffect.name}`;
   updateSlider();
+  onSliderUpdate();
 };
-
-const onSliderUpdate = () => {
-  const sliderValue = slider.noUiSlider.get();
-  if (isDefault()) {
-    image.style.filter = DEFAULT_EFFECT.style;
-  } else {
-    image.style.filter = `${chosenEffect.style}(${sliderValue}${chosenEffect.unit})`;
-  }
-  effectLevel.value = sliderValue;
-};
-
 
 const resetEffects = () => {
   chosenEffect = DEFAULT_EFFECT;
@@ -121,7 +123,7 @@ noUiSlider.create(slider, {
 });
 hideSlider();
 
-effects.addEventListener('change', onEffectsChange);
-slider.noUiSlider.on('update', onSliderUpdate);
+effects.addEventListener('change',onEffectsChange);
+effects.addEventListener('change', onSliderUpdate);
 
-export { resetEffects};
+export { resetEffects, onSliderUpdate, onEffectsChange, effects, slider };
