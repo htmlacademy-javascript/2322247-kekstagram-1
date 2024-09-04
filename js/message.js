@@ -1,13 +1,23 @@
-const hideSuccessMessage = () => document.querySelector('#success').classList.remove('visible');
+const hideSuccessMessage = () => {
+  const successMessage = document.querySelector('.success');
+  if (successMessage) {
+    successMessage.remove();
+  }
+};
 
-const hideErrorMessage = () => document.querySelector('#error').classList.remove('visible');
+const hideErrorMessage = () => {
+  const errorMessage = document.querySelector('.error');
+  if (errorMessage) {
+    errorMessage.remove();
+  }
+};
 
 const showSuccessMessage = () => {
   const successTemplate = document.getElementById('success');
   const successMessage = successTemplate.cloneNode(true);
-  console.log(successMessage);
-  console.log(successMessage.content.querySelector('.success__button'));
-  successMessage.content.querySelector('.success__button').addEventListener('click', () => {
+  const successSection = successMessage.content.querySelector('.success');
+
+  successSection.querySelector('.success__button').addEventListener('click', () => {
     hideSuccessMessage();
   });
   document.addEventListener('keydown', (event) => {
@@ -22,14 +32,18 @@ const showSuccessMessage = () => {
     }
   });
 
+  if (!document.querySelector('.success')) {
+    document.body.append(successSection);
+  } else {
+    successSection.classList.remove('hidden');
+  }
 };
 
 const showErrorMessage = () => {
   const errorTemplate = document.getElementById('error');
   const errorMessage = errorTemplate.cloneNode(true);
-  console.log(errorMessage);
-  console.log(errorMessage.content.querySelector('.error__button'));
-  errorMessage.content.querySelector('.error__button').addEventListener('click', () => {
+  const errorSection = errorMessage.content.querySelector('.success');
+  errorSection.querySelector('.error__button').addEventListener('click', () => {
     hideErrorMessage();
   });
   document.addEventListener('keydown', (event) => {
@@ -43,6 +57,11 @@ const showErrorMessage = () => {
       hideErrorMessage();
     }
   });
+  if (!document.querySelector('.error')) {
+    document.body.append(errorSection);
+  } else {
+    errorSection.classList.remove('hidden');
+  }
 };
 
 export { showSuccessMessage, showErrorMessage };
