@@ -1,5 +1,5 @@
 import { resetEffects, onEffectsChange, onSliderUpdate, slider, effects } from './effect.js';
-import { resetScale, scaleImage, smallerButton, biggerButton } from './scale.js';
+import { resetScale } from './scale.js';
 
 const MAX_HASHTAG_COUNT = 5;
 const VALID_SYMBOLS = /^#[a-zA-Zа-яёА-Я0-9]{1,19}$/i;
@@ -75,8 +75,6 @@ const onFileInputChange = () => {
       image.src = event.target.result;
       image.onload = () => {
         slider.noUiSlider.on('update', () => onSliderUpdate());
-        smallerButton.addEventListener('click', () => scaleImage());
-        biggerButton.addEventListener('click', () => scaleImage());
         effects.addEventListener('change', (evt) => onEffectsChange(evt));
         resetScale();
       };

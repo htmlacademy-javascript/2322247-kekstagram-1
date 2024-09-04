@@ -6,7 +6,7 @@ const showSuccessMessage = () => {
   const successMessage = document.getElementById('success');
   successMessage.classList.add('visible');
 
-  successMessage.querySelector('.success__button').addEventListener('click', () => {
+  successMessage.content.querySelector('.success__button').addEventListener('click', () => {
     hideSuccessMessage();
   });
   document.addEventListener('keydown', (event) => {
@@ -26,7 +26,7 @@ const showErrorMessage = () => {
   const errorMessage = document.querySelector('#error');
   errorMessage.classList.add('visible');
 
-  errorMessage.querySelector('.error__button').addEventListener('click', () => {
+  errorMessage.content.querySelector('.error__button').addEventListener('click', () => {
     hideErrorMessage();
   });
   document.addEventListener('keydown', (event) => {
