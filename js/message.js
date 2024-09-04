@@ -3,9 +3,10 @@ const hideSuccessMessage = () => document.querySelector('#success').classList.re
 const hideErrorMessage = () => document.querySelector('#error').classList.remove('visible');
 
 const showSuccessMessage = () => {
-  const successMessage = document.getElementById('success');
-  successMessage.classList.add('visible');
-
+  const successTemplate = document.getElementById('success');
+  const successMessage = successTemplate.cloneNode(true);
+  console.log(successMessage);
+  console.log(successMessage.content.querySelector('.success__button'));
   successMessage.content.querySelector('.success__button').addEventListener('click', () => {
     hideSuccessMessage();
   });
@@ -20,12 +21,14 @@ const showSuccessMessage = () => {
       hideSuccessMessage();
     }
   });
+
 };
 
 const showErrorMessage = () => {
-  const errorMessage = document.querySelector('#error');
-  errorMessage.classList.add('visible');
-
+  const errorTemplate = document.getElementById('error');
+  const errorMessage = errorTemplate.cloneNode(true);
+  console.log(errorMessage);
+  console.log(errorMessage.content.querySelector('.error__button'));
   errorMessage.content.querySelector('.error__button').addEventListener('click', () => {
     hideErrorMessage();
   });
@@ -42,4 +45,4 @@ const showErrorMessage = () => {
   });
 };
 
-export {showSuccessMessage, showErrorMessage};
+export { showSuccessMessage, showErrorMessage };
