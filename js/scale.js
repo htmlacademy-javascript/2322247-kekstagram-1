@@ -1,3 +1,4 @@
+import { image } from './form-modal.js';
 const SCALE_STEP = 25;
 const MIN_SCALE = 25;
 const MAX_SCALE = 100;
@@ -6,11 +7,10 @@ const DEFAULT_SCALE = 100;
 const smallerButton = document.querySelector('.scale__control--smaller');
 const biggerButton = document.querySelector('.scale__control--bigger');
 const scaleInput = document.querySelector('.scale__control--value');
-const image = document.querySelector('.img-upload__preview img');
 
 const scaleImage = (value) => {
-  image.computedStyleMap.transform = `scale(${value / 100})`;
   scaleInput.value = `${value}%`;
+  image.style.transform = `scale(${value / 100})`;
 };
 
 const onSmallerButtonClick = () => {

@@ -1,4 +1,4 @@
-import { resetEffects } from './effect.js';
+import { resetEffects, onEffectsChange, onSliderUpdate, slider, effects } from './effect.js';
 import { resetScale } from './scale.js';
 
 const MAX_HASHTAG_COUNT = 5;
@@ -12,6 +12,8 @@ const cancelButton = document.querySelector('#upload-cancel');
 const fileField = document.querySelector('#upload-file');
 const hashtagField = document.querySelector('.text__hashtags');
 const commentField = document.querySelector('.text__description');
+const imageContainer = document.querySelector('.img-upload__preview');
+const image = imageContainer.querySelector('img');
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -23,6 +25,20 @@ const showModal = () => {
   overlay.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
+};
+
+const blockSubmitButton = () => {
+  const submitButton = document.getElementById('upload-submit');
+  submitButton.disabled = true;
+  submitButton.style.opacity = 0.5;
+  submitButton.classList.add('disabled');
+};
+
+const unblockSubmitButton = () => {
+  const submitButton = document.getElementById('upload-submit');
+  submitButton.disabled = false;
+  submitButton.style.opacity = 1;
+  submitButton.classList.remove('disabled');
 };
 
 const hideModal = () => {
@@ -52,6 +68,20 @@ const onCancelButtonClick = () => {
 
 const onFileInputChange = () => {
   showModal();
+  const file = fileField.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      image.src = event.target.result;
+      image.onload = () => {
+        slider.noUiSlider.on('update', () => onSliderUpdate());
+        effects.addEventListener('change', (evt) => onEffectsChange(evt));
+        resetScale();
+      };
+      imageContainer.appendChild(image);
+    };
+    reader.readAsDataURL(file);
+  }
 };
 
 const isValidTag = (tag) => VALID_SYMBOLS.test(tag);
@@ -77,11 +107,20 @@ pristine.addValidator(
   TAG_ERROR_TEXT
 );
 
-const onFormSubmit = (evt) => {
-  evt.preventDefault();
-  pristine.validate();
+const setOnFormSubmit = (cb) => {
+  form.addEventListener('submit', async (evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+
+    if (isValid) {
+      blockSubmitButton();
+      await cb(new FormData(form));
+      unblockSubmitButton();
+    }
+  });
 };
 
 fileField.addEventListener('change', onFileInputChange);
 cancelButton.addEventListener('click', onCancelButtonClick);
-form.addEventListener('submit', onFormSubmit);
+
+export { setOnFormSubmit, hideModal,image };

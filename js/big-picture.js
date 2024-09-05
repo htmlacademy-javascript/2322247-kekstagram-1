@@ -10,11 +10,11 @@ const cancelButton = document.querySelector('.big-picture__cancel');
 let commentsShown = 0;
 let comments = [];
 
-const createComment = ({ avatar, name, message }) => {
+const createComment = (data) => {
   const comment = commentTemplate.cloneNode(true);
-  comment.querySelector('.social__picture').src = avatar;
-  comment.querySelector('.social__picture').alt = name;
-  comment.querySelector('.social__text').textContent = message;
+  comment.querySelector('.social__picture').src = data.avatar;
+  comment.querySelector('.social__picture').alt = data.name;
+  comment.querySelector('.social__text').textContent = data.message;
   return comment;
 };
 
@@ -70,18 +70,18 @@ const onCancelButtonClick = () => {
 };
 
 const onCommentsLoaderClick = () => {
-  renderComments();
+  renderComments(comments);
 };
 
 
-const renderPictureDetails = ({ url, likes, description }) => {
-  bigPicture.querySelector('.big-picture__img img').src = url;
-  bigPicture.querySelector('.big-picture__img img').alt = description;
-  bigPicture.querySelector('.likes-count').textContent = likes;
-  bigPicture.querySelector('.social__caption').textContent = description;
+const renderPictureDetails = (picture) => {
+  bigPicture.querySelector('.big-picture__img img').src = picture.url;
+  bigPicture.querySelector('.big-picture__img img').alt = picture.description;
+  bigPicture.querySelector('.likes-count').textContent = picture.likes;
+  bigPicture.querySelector('.social__caption').textContent = picture.description;
 };
 
-const renderBigPicture = (data) => {
+const renderBigPicture = (picture) => {
   bigPicture.classList.remove('hidden');
   body.classList.add('modal-open');
 
@@ -95,15 +95,14 @@ const renderBigPicture = (data) => {
   commentsLoader.removeEventListener('click', onCommentsLoaderClick);
   commentsLoader.addEventListener('click', onCommentsLoaderClick);
 
-  comments = data.comments;
+  comments = picture.comments;
 
   commentList.innerHTML = '';
 
-  renderComments();
+  renderComments(comments);
 
-  renderPictureDetails(data);
+  renderPictureDetails(picture);
 };
 
 cancelButton.addEventListener('click', onCancelButtonClick);
-
 export { renderBigPicture };
