@@ -12,6 +12,7 @@ const createMiniPicture = (data) => {
 };
 
 const renderMiniPicture = (pictures, container) => {
+  container.querySelectorAll('.picture').forEach((element) => element.remove());
   const fragment = document.createDocumentFragment();
   pictures.forEach((picture) => {
     const miniPicture = createMiniPicture(picture);
