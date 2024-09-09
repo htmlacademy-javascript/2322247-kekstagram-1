@@ -45,11 +45,11 @@ const setOnFilterClick = (callback) => {
   });
 };
 
-const init = (loadedPictures, callback) => {
+const initFilters = (loadedPictures, callback) => {
   filterPicture.classList.remove('img-filters--inactive');
   pictures = [...loadedPictures];
   setOnFilterClick(callback);
 };
 
-export { init, getFiltredPictures };
+export { initFilters, getFiltredPictures };
 
