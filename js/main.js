@@ -1,26 +1,32 @@
-import{renderGallary} from './gallery.js';
-import { getData,sendData } from './api.js';
-import {showAlert} from './alert.js';
-import {setOnFormSubmit, hideModal} from './form-modal.js';
-import {showSuccessMessage, showErrorMessage} from './message.js';
-import { init, getFiltredPictures } from './filter.js';
+import { renderGallary } from './gallery.js';
+import { getData, sendData } from './api.js';
+import { showAlert } from './alert.js';
+import { setOnFormSubmit, hideModal } from './form-modal.js';
+import { showSuccessMessage, showErrorMessage } from './message.js';
+import { initFilters, getFiltredPictures } from './filter.js';
 import { debounce } from './until.js';
 
-setOnFormSubmit(async (data) => {
-  try {
-    await sendData(data);
-    hideModal();
-    showSuccessMessage();
-  } catch {
-    showErrorMessage();
-  }
-});
-
-try {
-  const data = await getData();
+const init = async () => {
+  let data;
   const debouncedRenderGallery = debounce(renderGallary);
-  init(data, debouncedRenderGallery);
-  renderGallary(getFiltredPictures());
-} catch (err) {
-  showAlert(err.message);
-}
+  try {
+    data = await getData();
+    initFilters(data, debouncedRenderGallery);
+  } catch (err) {
+    showAlert(err.message);
+  }
+  if (data) {
+    renderGallary(getFiltredPictures());
+  }
+
+  setOnFormSubmit(async (dataSet) => {
+    try {
+      await sendData(dataSet);
+      hideModal();
+      showSuccessMessage();
+    } catch {
+      showErrorMessage();
+    }
+  });
+};
+init();

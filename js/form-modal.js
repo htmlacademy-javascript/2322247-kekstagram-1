@@ -4,6 +4,7 @@ import { resetScale } from './scale.js';
 const MAX_HASHTAG_COUNT = 5;
 const VALID_SYMBOLS = /^#[a-zA-Zа-яёА-Я0-9]{1,19}$/i;
 const TAG_ERROR_TEXT = 'Неправильно заполнены хэштеги';
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
 const form = document.querySelector('.img-upload__form');
 const overlay = document.querySelector('.img-upload__overlay');
@@ -69,7 +70,9 @@ const onCancelButtonClick = () => {
 const onFileInputChange = () => {
   showModal();
   const file = fileField.files[0];
-  if (file) {
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  if (matches) {
     const reader = new FileReader();
     reader.onload = (event) => {
       image.src = event.target.result;
