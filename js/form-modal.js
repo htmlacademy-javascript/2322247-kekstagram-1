@@ -71,8 +71,8 @@ const onFileInputChange = () => {
   const file = fileField.files[0];
   if (file) {
     const reader = new FileReader();
-    reader.onload = (event) => {
-      image.src = event.target.result;
+    reader.onload = (evtRead) => {
+      image.src = evtRead.target.result;
       image.onload = () => {
         slider.noUiSlider.on('update', () => onSliderUpdate());
         effects.addEventListener('change', (evt) => onEffectsChange(evt));
