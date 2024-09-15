@@ -20,13 +20,13 @@ const showSuccessMessage = () => {
   successSection.querySelector('.success__button').addEventListener('click', () => {
     hideSuccessMessage();
   });
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') {
+  document.addEventListener('keydown', (evt) => {
+    if (evt.key === 'Escape') {
       hideSuccessMessage();
     }
   });
-  window.addEventListener('click', (event) => {
-    const target = event.target;
+  window.addEventListener('click', (evt) => {
+    const target = evt.target;
     if (!successMessage.contains(target)) {
       hideSuccessMessage();
     }
@@ -42,17 +42,23 @@ const showSuccessMessage = () => {
 const showErrorMessage = () => {
   const errorTemplate = document.getElementById('error');
   const errorMessage = errorTemplate.cloneNode(true);
-  const errorSection = errorMessage.content.querySelector('.success');
+  const errorSection = errorMessage.content.querySelector('.error');
+
   errorSection.querySelector('.error__button').addEventListener('click', () => {
     hideErrorMessage();
   });
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') {
-      hideErrorMessage();
+
+  document.body.addEventListener('keydown', (evt) => {
+    if (evt.key === 'Escape') {
+      if (document.querySelector('.error')) {
+        hideErrorMessage();
+        evt.stopPropagation();
+      }
     }
   });
-  window.addEventListener('click', (event) => {
-    const target = event.target;
+
+  window.addEventListener('click', (evt) => {
+    const target = evt.target;
     if (!errorMessage.contains(target)) {
       hideErrorMessage();
     }
