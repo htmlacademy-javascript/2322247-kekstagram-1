@@ -18,10 +18,10 @@ const onContainerClick = (evt) => {
   renderBigPicture(picture);
 };
 
-const renderGallary = (currentPictures) => {
+const renderGallery = (currentPictures) => {
   pictures = currentPictures;
   container.addEventListener('click', onContainerClick);
   renderMiniPicture(pictures, container);
 };
 
-export { renderGallary };
+export { renderGallery };

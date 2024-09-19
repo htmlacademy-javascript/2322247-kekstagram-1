@@ -71,15 +71,15 @@ const onFileInputChange = () => {
   const file = fileField.files[0];
   if (file) {
     const reader = new FileReader();
-    reader.onload = (evtRead) => {
+    reader.addEventListener('load', (evtRead) => {
       image.src = evtRead.target.result;
-      image.onload = () => {
+      image.addEventListener('load', () => {
         slider.noUiSlider.on('update', () => onSliderUpdate());
         effects.addEventListener('change', (evt) => onEffectsChange(evt));
         resetScale();
-      };
+      });
       imageContainer.appendChild(image);
-    };
+    });
     reader.readAsDataURL(file);
   }
 };
