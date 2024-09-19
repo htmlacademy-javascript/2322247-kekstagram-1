@@ -6,21 +6,27 @@ import {showSuccessMessage, showErrorMessage} from './message.js';
 import { initializeFilters, getFiltredPictures } from './filter.js';
 import { debounce } from './until.js';
 
-setOnFormSubmit(async (data) => {
+const init = async () => {
+  let data;
+  const debouncedRenderGallery = debounce(renderGallary);
   try {
-    await sendData(data);
-    hideModal();
-    showSuccessMessage();
-  } catch {
-    showErrorMessage();
+    data = await getData();
+    initializeFilters(data, debouncedRenderGallery);
+  } catch (err) {
+    showAlert(err.message);
   }
-});
+  if (data) {
+    renderGallery(getFiltredPictures());
+  }
 
-try {
-  const data = await getData();
-  const debouncedRenderGallery = debounce(renderGallery);
-  initializeFilters(data, debouncedRenderGallery);
-  renderGallery(getFiltredPictures());
-} catch (err) {
-  showAlert(err.message);
-}
+  setOnFormSubmit(async (dataSet) => {
+    try {
+      await sendData(dataSet);
+      hideModal();
+      showSuccessMessage();
+    } catch {
+      showErrorMessage();
+    }
+  });
+};
+init();
