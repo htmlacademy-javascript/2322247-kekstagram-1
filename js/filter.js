@@ -45,6 +45,7 @@ const setOnFilterClick = (callback) => {
   });
 };
 
+
 const initializeFilters = (loadedPictures, callback) => {
   filterPicture.classList.remove('img-filters--inactive');
   pictures = [...loadedPictures];
@@ -52,4 +53,5 @@ const initializeFilters = (loadedPictures, callback) => {
 };
 
 export { initializeFilters, getFiltredPictures };
+
 
