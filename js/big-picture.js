@@ -6,15 +6,17 @@ const commentTemplate = document.querySelector('.social__comment');
 const commentsLoader = document.querySelector('.comments-loader');
 const body = document.querySelector('body');
 const cancelButton = document.querySelector('.big-picture__cancel');
+const commentPicture = commentTemplate.querySelector('.social__picture');
+const commentText = commentTemplate.querySelector('.social__text');
 
 let commentsShown = 0;
 let comments = [];
 
 const createComment = (data) => {
   const comment = commentTemplate.cloneNode(true);
-  comment.querySelector('.social__picture').src = data.avatar;
-  comment.querySelector('.social__picture').alt = data.name;
-  comment.querySelector('.social__text').textContent = data.message;
+  commentPicture.src = data.avatar;
+  commentPicture.alt = data.name;
+  commentText.textContent = data.message;
   return comment;
 };
 
