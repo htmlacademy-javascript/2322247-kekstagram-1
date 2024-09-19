@@ -8,7 +8,7 @@ import { debounce } from './until.js';
 
 const init = async () => {
   let data;
-  const debouncedRenderGallery = debounce(renderGallary);
+  const debouncedRenderGallery = debounce(renderGallery);
   try {
     data = await getData();
     initializeFilters(data, debouncedRenderGallery);
